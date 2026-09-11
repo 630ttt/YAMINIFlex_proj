@@ -219,9 +219,7 @@ const Home = () => {
                 <span className="service-card-price">
                   From ₹{service.price} {UNIT_LABELS[service.unit]}
                 </span>
-                <Link to="/contact" className="service-card-link">
-                  Order <FaArrowRight />
-                </Link>
+               
               </div>
             </div>
           ))}
