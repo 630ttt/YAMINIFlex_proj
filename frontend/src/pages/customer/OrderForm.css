@@ -1,5 +1,381 @@
 .order-form-page {
-  max-width: 700px;
+  max-width: 960px;
+}
+
+.payment-method-page {
+  min-height: auto;
+}
+
+.payment-method-frame {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid var(--color-cream-dark);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  padding: 1.4rem;
+}
+
+.payment-method-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.secure-badge {
+  background: var(--color-burgundy);
+  color: #fff;
+  border-radius: 99px;
+  padding: 0.45rem 0.95rem;
+  font-weight: 800;
+  font-size: 0.78rem;
+}
+
+.payment-method-tabs {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 1rem 0 1.2rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--color-cream-dark);
+}
+
+.payment-method-tabs .payment-option {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.payment-tab-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.payment-grid {
+  display: grid;
+  grid-template-columns: minmax(420px, 1.8fr) minmax(280px, 1fr);
+  gap: 1.2rem;
+  align-items: start;
+}
+
+.payment-method-panel,
+.order-summary-panel {
+  background: #fffefc;
+  border-radius: 14px;
+  border: 1px solid var(--color-cream-dark);
+  padding: 1rem;
+}
+
+.gateway-heading h3 {
+  margin: 0 0 1rem;
+  color: var(--color-charcoal);
+  font-size: 1.7rem;
+}
+
+.gateway-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(130px, 1fr));
+  gap: 0.8rem;
+}
+
+.gateway-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff;
+  border: 1px solid var(--color-cream-dark);
+  border-radius: 12px;
+  padding: 0.8rem 0.9rem;
+  font-weight: 700;
+  color: var(--color-charcoal);
+}
+
+.gateway-row input {
+  accent-color: var(--color-burgundy);
+}
+
+.gateway-row span {
+  font-size: 0.9rem;
+}
+
+.phonepe-scan-card,
+.upi-scan-card,
+.bank-transfer-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #fffaf7;
+  border-radius: 12px;
+  border: 1px solid var(--color-cream-dark);
+}
+
+.phonepe-scan-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.phonepe-brand {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-burgundy);
+}
+
+.phonepe-status {
+  color: var(--color-gold);
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.phonepe-scan-body {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 0.8rem;
+}
+
+.phonepe-qr-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phonepe-qr {
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
+  border: 3px solid var(--color-burgundy);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(0,0,0,0.04) 4px, rgba(0,0,0,0.04) 8px), 
+    repeating-linear-gradient(-45deg, transparent, transparent 4px, rgba(0,0,0,0.04) 4px, rgba(0,0,0,0.04) 8px);
+}
+
+.qr-corner {
+  width: 14px;
+  height: 14px;
+  border-color: var(--color-burgundy);
+  border-style: solid;
+  position: absolute;
+}
+
+.corner-tl { left: 8px; top: 8px; border-width: 3px 0 0 3px; }
+.corner-tr { right: 8px; top: 8px; border-width: 3px 3px 0 0; }
+.corner-bl { left: 8px; bottom: 8px; border-width: 0 0 3px 3px; }
+.corner-br { right: 8px; bottom: 8px; border-width: 0 3px 3px 0; }
+
+.qr-center {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--color-burgundy);
+}
+
+.phonepe-scan-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.scan-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px dashed var(--color-cream-dark);
+}
+
+.scan-label {
+  color: var(--color-charcoal);
+  font-weight: 700;
+  font-size: 0.83rem;
+}
+
+.scan-value {
+  color: var(--color-burgundy);
+  font-weight: 700;
+  font-size: 0.84rem;
+  text-align: right;
+}
+
+.phonepe-scan-actions {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: center;
+}
+
+.scan-button {
+  width: 100%;
+}
+
+.scan-helper {
+  margin: 0.8rem 0 0;
+  color: #6b625a;
+  font-size: 0.84rem;
+}
+
+.order-status-message {
+  background: #fffaf7;
+  color: var(--color-burgundy);
+  border-left: 4px solid var(--color-burgundy);
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.order-summary-panel {
+  min-width: 280px;
+  background: #fffefb;
+}
+
+.order-summary-panel h3 {
+  margin: 0 0 0.9rem;
+  color: var(--color-charcoal);
+  font-size: 1.8rem;
+}
+
+.summary-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px dotted var(--color-cream-dark);
+  color: var(--color-charcoal);
+  font-size: 0.92rem;
+}
+
+.summary-line span:first-child {
+  font-weight: 700;
+  color: #6b625a;
+}
+
+.summary-line span:last-child {
+  font-weight: 800;
+  color: var(--color-burgundy);
+}
+
+.total-line {
+  border-bottom: none;
+  background: var(--color-cream-dark);
+  padding: 0.8rem 0.9rem;
+  border-radius: 8px;
+  margin-top: 0.6rem;
+}
+
+.order-summary-panel .btn {
+  width: 100%;
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.payment-method-panel {
+  min-width: 420px;
+}
+
+.cod-payment,
+.cod-payment-body {
+  padding-top: 1rem;
+}
+
+.cod-payment h3 {
+  margin-bottom: 0.4rem;
+}
+
+.cod-payment-body p {
+  margin: 0.4rem 0;
+}
+
+.upi-card-title {
+  margin-bottom: 0.8rem;
+}
+
+.upi-heading {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-burgundy);
+}
+
+.upi-payment-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.upi-payment-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.upi-label {
+  color: #6b625a;
+  font-weight: 700;
+}
+
+.upi-value {
+  font-weight: 800;
+  color: var(--color-burgundy);
+}
+
+.bank-transfer-title {
+  font-size: 1.2rem;
+  color: var(--color-burgundy);
+  margin-bottom: 0.8rem;
+}
+
+.bank-transfer-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bank-transfer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px dashed var(--color-cream-dark);
+  padding-bottom: 0.4rem;
+}
+
+.bank-transfer-row span:first-child {
+  color: #6b625a;
+  font-weight: 700;
+}
+
+.bank-transfer-row span:last-child {
+  color: var(--color-burgundy);
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .payment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-method-panel {
+    min-width: unset;
+  }
+
+  .gateway-list {
+    grid-template-columns: 1fr;
+  }
+
+  .phonepe-scan-body {
+    grid-template-columns: 1fr;
+  }
 }
 
 .order-form {

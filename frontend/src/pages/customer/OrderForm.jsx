@@ -119,25 +119,44 @@ const OrderForm = () => {
       setError('Please confirm the entered details are correct before proceeding.');
       return;
     }
+
     setSubmitting(true);
     setError('');
-    try {
-      const formData = new FormData();
-      formData.append('designId', designId);
-      formData.append('name', form.name);
-      formData.append('phone', form.phone);
-      formData.append('email', form.email);
-      formData.append('address', form.address);
-      formData.append('size', form.size);
-      formData.append('quantity', form.quantity);
-      formData.append('customizationNotes', composedNotes);
-      if (mainPhoto) formData.append('customerFiles', mainPhoto);
-      extraFiles.forEach((f) => formData.append('customerFiles', f));
 
-      const res = await api.post('/orders', formData);
-      navigate(`/order-success/${res.data._id}`);
+    try {
+      const quantity = Math.max(1, Number(form.quantity) || 1);
+      const designPrice = Number(design?.price) || 0;
+      const safeGrandTotal = designPrice * quantity;
+
+      const draft = {
+        designId,
+        designTitle: design?.title,
+        designBasePrice: designPrice,
+        grandTotal: safeGrandTotal,
+        totalAmount: safeGrandTotal,
+        name: form.name,
+        phone: form.phone,
+        email: form.email,
+        address: form.address,
+        size: form.size,
+        quantity,
+        customizationNotes: composedNotes,
+        material: material?.name,
+        materialPrice: material?.price,
+        occasion,
+        celebrantName,
+        eventDate,
+        deliveryMode,
+        mainSubjectPhotoData: mainPhoto ? await readFileAsDataUrl(mainPhoto) : '',
+        mainPhotoName: mainPhoto?.name || '',
+        additionalFilesData: await Promise.all(extraFiles.map((file) => readFileAsDataUrl(file))),
+        additionalFilesNames: extraFiles.map((file) => file.name),
+      };
+
+      sessionStorage.setItem('yaminiflex_order_draft', JSON.stringify(draft));
+      navigate('/payment-method');
     } catch (err) {
-      setError(err.message || 'Failed to place order');
+      setError(err.message || 'Failed to prepare order');
     } finally {
       setSubmitting(false);
     }
@@ -324,7 +343,7 @@ const OrderForm = () => {
 
           <div className="wizard-summary-actions">
             <button type="submit" className="btn btn-primary" disabled={submitting}>
-              <FaPaperPlane /> {submitting ? 'Placing Order...' : 'Proceed to WhatsApp Proof & Order'}
+              <FaPaperPlane /> {submitting ? 'Preparing Payment...' : 'Proceed to WhatsApp Proof & Order'}
             </button>
             <button type="button" className="btn btn-gold" onClick={handleInstantWhatsApp}>
               <FaWhatsapp /> Instant WhatsApp Query
@@ -335,5 +354,12 @@ const OrderForm = () => {
     </div>
   );
 };
+
+const readFileAsDataUrl = (file) => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.onload = () => resolve(reader.result);
+  reader.onerror = reject;
+  reader.readAsDataURL(file);
+});
 
 export default OrderForm;
