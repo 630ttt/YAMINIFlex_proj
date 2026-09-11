@@ -1,0 +1,21 @@
+.design-form {
+  max-width: 640px;
+  padding: 2rem;
+}
+
+.design-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.design-form-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.design-form-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

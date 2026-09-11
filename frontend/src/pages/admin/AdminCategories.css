@@ -1,0 +1,11 @@
+.category-form {
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.category-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.4fr auto;
+  gap: 0.8rem;
+  align-items: center;
+}

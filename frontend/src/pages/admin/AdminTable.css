@@ -1,0 +1,55 @@
+.admin-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.admin-table-wrapper {
+  overflow-x: auto;
+  padding: 0.5rem;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-cream-dark);
+  font-size: 0.92rem;
+}
+
+.admin-table th {
+  color: var(--color-burgundy);
+  font-weight: 700;
+}
+
+.admin-table-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.admin-table-actions {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.admin-table-actions a,
+.admin-table-actions button {
+  color: var(--color-burgundy);
+  background: none;
+  border: none;
+  font-size: 1rem;
+}
+
+.admin-table-actions button:hover,
+.admin-table-actions a:hover {
+  color: var(--color-gold);
+}

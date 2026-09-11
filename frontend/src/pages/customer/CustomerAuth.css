@@ -1,0 +1,20 @@
+.customer-auth-page {
+  max-width: 480px;
+}
+
+.customer-auth-card {
+  padding: 2rem;
+}
+
+.customer-auth-btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.customer-auth-switch {
+  text-align: center;
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+  color: #6b625a;
+}

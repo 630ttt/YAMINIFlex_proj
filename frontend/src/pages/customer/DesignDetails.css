@@ -1,0 +1,245 @@
+.design-details-page {
+  max-width: 1200px;
+}
+
+.design-details-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+
+.design-details-breadcrumb {
+  font-size: 0.82rem;
+  color: #857c72;
+}
+
+.design-details-breadcrumb a {
+  color: #857c72;
+  text-decoration: none;
+}
+
+.design-details-breadcrumb a:hover {
+  color: var(--color-burgundy);
+}
+
+.design-details-breadcrumb span:last-child {
+  color: var(--color-burgundy);
+  font-weight: 600;
+}
+
+.design-details-back {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-burgundy);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.design-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+
+.design-details-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.design-details-image {
+  position: relative;
+  background-color: var(--color-cream-dark);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.design-details-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+}
+
+.design-details-id-badge,
+.design-details-hd-badge {
+  position: absolute;
+  top: 0.8rem;
+  z-index: 1;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+}
+
+.design-details-id-badge {
+  left: 0.8rem;
+  background-color: rgba(43, 39, 36, 0.75);
+  color: #fff;
+}
+
+.design-details-hd-badge {
+  right: 0.8rem;
+  background-color: var(--color-gold);
+  color: #fff;
+}
+
+.design-details-specs {
+  padding: 1.2rem 1.4rem;
+}
+
+.design-details-specs h4 {
+  margin: 0 0 0.8rem;
+  color: var(--color-burgundy);
+  font-size: 0.95rem;
+}
+
+.design-details-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+}
+
+.design-details-specs-label {
+  display: block;
+  font-size: 0.72rem;
+  color: #a39a90;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.design-details-specs-value {
+  display: block;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--color-charcoal);
+}
+
+.design-details-assurances {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.design-details-assurance {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--color-cream-dark);
+  color: #1e6b3a;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+}
+
+.design-details-eyebrow {
+  color: var(--color-gold);
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 0 0 0.4rem;
+}
+
+.design-details-title {
+  margin-bottom: 0.6rem;
+}
+
+.design-details-title-id {
+  color: #a39a90;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.design-details-description {
+  color: #6b625a;
+  margin-bottom: 1rem;
+}
+
+.design-details-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1px solid var(--color-cream-dark);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  color: var(--color-charcoal);
+  margin-bottom: 1.2rem;
+}
+
+.design-details-copy-btn:hover {
+  border-color: var(--color-burgundy);
+  color: var(--color-burgundy);
+}
+
+.design-details-block {
+  margin-bottom: 1.5rem;
+}
+
+.design-details-block h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-charcoal);
+}
+
+.design-details-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background-color: var(--color-cream-dark);
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+.design-details-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-burgundy);
+  margin-bottom: 0.8rem;
+}
+
+.design-details-order-count {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #857c72;
+}
+
+.design-details-dispatch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #1e6b3a;
+  margin-bottom: 1.5rem;
+}
+
+.design-details-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.design-details-order-btn {
+  flex: 1;
+  min-width: 220px;
+  justify-content: center;
+}
+
+@media (max-width: 780px) {
+  .design-details {
+    grid-template-columns: 1fr;
+  }
+}

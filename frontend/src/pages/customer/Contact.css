@@ -1,0 +1,14 @@
+.contact-page {
+  max-width: 560px;
+}
+
+.contact-card {
+  padding: 2rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,32 @@
+.admin-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-burgundy) 0%, var(--color-charcoal) 100%);
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 380px;
+  padding: 2.5rem;
+}
+
+.admin-login-title {
+  font-family: var(--font-heading);
+  color: var(--color-burgundy);
+  text-align: center;
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.admin-login-subtitle {
+  text-align: center;
+  color: #857c72;
+  margin-bottom: 1.5rem;
+}
+
+.admin-login-btn {
+  width: 100%;
+  justify-content: center;
+}

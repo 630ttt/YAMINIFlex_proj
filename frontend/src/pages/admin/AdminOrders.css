@@ -1,0 +1,42 @@
+.admin-orders-filter {
+  max-width: 220px;
+}
+
+.admin-orders-final-link {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--color-gold);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.admin-orders-uploading {
+  display: block;
+  font-size: 0.78rem;
+  color: #857c72;
+  margin-top: 0.2rem;
+}
+
+.admin-orders-approval-none {
+  font-size: 0.82rem;
+  color: #a39a90;
+}
+
+.admin-orders-ref-images {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.admin-orders-ref-images a {
+  font-size: 0.82rem;
+  color: var(--color-burgundy);
+  font-weight: 600;
+}
+
+.admin-orders-feedback {
+  font-size: 0.8rem;
+  color: #8a1c1c;
+  margin: 0.3rem 0 0;
+  font-style: italic;
+}
