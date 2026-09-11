@@ -2,6 +2,7 @@ const Order = require('../models/Order');
 const Customer = require('../models/Customer');
 const Design = require('../models/Design');
 const jwt = require('jsonwebtoken');
+const { saveUpload, saveUploads } = require('../services/fileStorage');
 
 // @desc  Create order (customer places order, logged in or as guest)
 // @route POST /api/orders
@@ -41,7 +42,7 @@ const createOrder = async (req, res) => {
       await customer.save();
     }
 
-    const customerFileUploads = (req.files || []).map((file) => `/uploads/${file.filename}`);
+    const customerFileUploads = await saveUploads(req.files || []);
 
     const order = await Order.create({
       design: design._id,
@@ -112,7 +113,7 @@ const updateOrder = async (req, res) => {
   try {
     const updates = { ...req.body };
     if (req.file) {
-      updates.finalDesignFile = `/uploads/${req.file.filename}`;
+      updates.finalDesignFile = await saveUpload(req.file);
       // a newly uploaded design always needs fresh customer approval
       updates.status = 'awaiting-approval';
       updates.finalDesignApproved = false;

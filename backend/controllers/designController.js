@@ -1,5 +1,6 @@
 const Design = require('../models/Design');
 const Order = require('../models/Order');
+const { saveUpload } = require('../services/fileStorage');
 
 // @desc  Get paginated designs with search/filter (supports catalogue with 5k-10k designs)
 // @route GET /api/designs?page=1&limit=20&category=xxx&search=xxx
@@ -75,8 +76,8 @@ const getDesignById = async (req, res) => {
 const createDesign = async (req, res) => {
   try {
     const { title, description, category, tags, sizeOptions, price, isFeatured } = req.body;
-    const thumbnail = req.files?.thumbnail?.[0] ? `/uploads/${req.files.thumbnail[0].filename}` : '';
-    const fullImage = req.files?.fullImage?.[0] ? `/uploads/${req.files.fullImage[0].filename}` : thumbnail;
+    const thumbnail = req.files?.thumbnail?.[0] ? await saveUpload(req.files.thumbnail[0]) : '';
+    const fullImage = req.files?.fullImage?.[0] ? await saveUpload(req.files.fullImage[0]) : thumbnail;
 
     const design = await Design.create({
       title,
@@ -103,8 +104,8 @@ const updateDesign = async (req, res) => {
     const updates = { ...req.body };
     if (updates.tags) updates.tags = updates.tags.split(',').map((t) => t.trim());
     if (updates.sizeOptions) updates.sizeOptions = updates.sizeOptions.split(',').map((s) => s.trim());
-    if (req.files?.thumbnail?.[0]) updates.thumbnail = `/uploads/${req.files.thumbnail[0].filename}`;
-    if (req.files?.fullImage?.[0]) updates.fullImage = `/uploads/${req.files.fullImage[0].filename}`;
+    if (req.files?.thumbnail?.[0]) updates.thumbnail = await saveUpload(req.files.thumbnail[0]);
+    if (req.files?.fullImage?.[0]) updates.fullImage = await saveUpload(req.files.fullImage[0]);
 
     const design = await Design.findByIdAndUpdate(req.params.id, updates, {
       new: true,
