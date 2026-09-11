@@ -1,5 +1,6 @@
 const Category = require('../models/Category');
 const Design = require('../models/Design');
+const { saveUpload } = require('../services/fileStorage');
 
 // @desc  Get all categories (with live design counts)
 // @route GET /api/categories
@@ -43,7 +44,7 @@ const getCategoryById = async (req, res) => {
 const createCategory = async (req, res) => {
   try {
     const { name, slug, description } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : '';
+    const image = req.file ? await saveUpload(req.file) : '';
     const category = await Category.create({ name, slug, description, image });
     res.status(201).json({ success: true, data: category });
   } catch (error) {
@@ -57,7 +58,7 @@ const updateCategory = async (req, res) => {
   try {
     const updates = { ...req.body };
     if (req.file) {
-      updates.image = `/uploads/${req.file.filename}`;
+      updates.image = await saveUpload(req.file);
     }
     const category = await Category.findByIdAndUpdate(req.params.id, updates, {
       new: true,
