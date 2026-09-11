@@ -41,14 +41,14 @@ const Navbar = () => {
         <nav className="navbar-links">
           <NavLink to="/" end className={navLinkClass}>Home</NavLink>
           <NavLink to="/catalogue" className={navLinkClass}>Designs</NavLink>
-          <NavLink to="/catalogue" className={navLinkClass}>Categories</NavLink>
+          <NavLink to="/how-it-works" className={navLinkClass}>How It Works</NavLink>
           <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
         </nav>
 
         <form className="navbar-search" onSubmit={handleSearchSubmit}>
           <FaSearch className="navbar-search-icon" />
           <input
-            type="text"
+            type="text" 
             placeholder="Search flex, vinyl, boards..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}

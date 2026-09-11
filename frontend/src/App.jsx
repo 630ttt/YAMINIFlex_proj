@@ -12,6 +12,8 @@ import DesignDetails from './pages/customer/DesignDetails';
 import OrderForm from './pages/customer/OrderForm';
 import OrderSuccess from './pages/customer/OrderSuccess';
 import PaymentMethod from './pages/customer/PaymentMethod';
+
+
 import TrackOrder from './pages/customer/TrackOrder';
 import Contact from './pages/customer/Contact';
 import CustomerLogin from './pages/customer/CustomerLogin';
@@ -19,7 +21,7 @@ import CustomerRegister from './pages/customer/CustomerRegister';
 import CustomerAccount from './pages/customer/CustomerAccount';
 import { PrivacyPolicy, TermsAndConditions, RefundPolicy } from './pages/customer/LegalPages';
 import NotFound from './pages/customer/NotFound';
-
+import HowIt from "./pages/customer/HowIt";
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminDesigns from './pages/admin/AdminDesigns';
@@ -51,6 +53,7 @@ function App() {
           <Route element={<CustomerProtectedRoute />}>
             <Route path="/account" element={<CustomerAccount />} />
           </Route>
+          <Route path="/how-it-works" element={<HowIt />} />
         </Route>
 
         <Route path="/admin/login" element={<AdminLogin />} />

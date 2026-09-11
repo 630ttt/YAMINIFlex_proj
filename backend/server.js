@@ -8,6 +8,7 @@ const categoryRoutes = require('./routes/categoryRoutes');
 const designRoutes = require('./routes/designRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const authRoutes = require('./routes/authRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const customerAuthRoutes = require('./routes/customerAuthRoutes');
 
@@ -34,6 +35,7 @@ app.use('/api/customers', customerAuthRoutes);
 // Admin routes
 app.use('/api/admin/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // 404 handler
 app.use((req, res) => {

@@ -27,12 +27,52 @@ const orderSchema = new mongoose.Schema(
     specialChanges: { type: String, trim: true, default: '' },
 
     // Payment information
-    paymentMethod: { type: String, trim: true, default: 'COD' },
-    paymentStatus: { type: String, trim: true, default: 'Pending' },
-    transactionId: { type: String, trim: true, default: '' },
-    amountPaid: { type: Number, default: 0 },
-    paymentDate: { type: String, trim: true, default: '' },
-    paymentTime: { type: String, trim: true, default: '' },
+paymentMethod: {
+  type: String,
+  trim: true,
+  default: 'COD',
+},
+
+paymentStatus: {
+  type: String,
+  trim: true,
+  default: 'Pending',
+},
+
+transactionId: {
+  type: String,
+  trim: true,
+  default: '',
+},
+
+phonePeOrderId: {
+  type: String,
+  trim: true,
+  default: '',
+},
+
+phonePeTransactionId: {
+  type: String,
+  trim: true,
+  default: '',
+},
+
+amountPaid: {
+  type: Number,
+  default: 0,
+},
+
+paymentDate: {
+  type: String,
+  trim: true,
+  default: '',
+},
+
+paymentTime: {
+  type: String,
+  trim: true,
+  default: '',
+},
 
     // User and delivery information
     name: { type: String, trim: true, default: '' },
@@ -49,11 +89,21 @@ const orderSchema = new mongoose.Schema(
     finalDesignApprovedAt: { type: Date },
     customerFeedback: { type: String, trim: true, default: '' },
     status: {
-      type: String,
-      enum: ['Order Placed', 'Payment Confirmed', 'Design Proof Preparing', 'Proof Sent', 'Customer Approved', 'Printing', 'Ready for Pickup', 'Out for Delivery', 'Delivered', 'Cancelled'],
-      default: 'Order Placed',
+  type: String,
+  enum: [
+    'pending',
+    'confirmed',
+    'in-progress',
+    'awaiting-approval',
+    'approved',
+    'ready',
+    'delivered',
+    'cancelled',
+  ],
+  default: 'pending',
+},
     },
-  },
+
   { timestamps: true }
 );
 
