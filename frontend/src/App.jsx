@@ -11,6 +11,8 @@ import Catalogue from './pages/customer/Catalogue';
 import DesignDetails from './pages/customer/DesignDetails';
 import OrderForm from './pages/customer/OrderForm';
 import OrderSuccess from './pages/customer/OrderSuccess';
+import PaymentMethod from './pages/customer/PaymentMethod';
+import TrackOrder from './pages/customer/TrackOrder';
 import Contact from './pages/customer/Contact';
 import CustomerLogin from './pages/customer/CustomerLogin';
 import CustomerRegister from './pages/customer/CustomerRegister';
@@ -37,7 +39,9 @@ function App() {
           <Route path="/catalogue" element={<Catalogue />} />
           <Route path="/design/:id" element={<DesignDetails />} />
           <Route path="/order/:designId" element={<OrderForm />} />
+          <Route path="/payment-method" element={<PaymentMethod />} />
           <Route path="/order-success/:orderId" element={<OrderSuccess />} />
+          <Route path="/track-order/:orderId" element={<TrackOrder />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<CustomerLogin />} />
           <Route path="/register" element={<CustomerRegister />} />
