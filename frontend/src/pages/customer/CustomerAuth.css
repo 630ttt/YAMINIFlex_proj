@@ -1,20 +1,59 @@
 .customer-auth-page {
-  max-width: 480px;
+  max-width: 520px;
 }
 
 .customer-auth-card {
-  padding: 2rem;
+  padding: 2.5rem;
+  background: #ffffff;
+  border: 1px solid #dce5f0;
+  border-radius: 22px;
+  box-shadow: 0 20px 55px rgba(6, 26, 54, 0.12);
 }
 
 .customer-auth-btn {
   width: 100%;
   justify-content: center;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
+  min-height: 52px;
+  border: none;
+  border-radius: 12px;
+  background: #f7c928;
+  color: #061a36;
+  font-weight: 800;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px rgba(247, 201, 40, 0.20);
+}
+
+.customer-auth-btn:hover {
+  background: #ffd83d;
+  color: #061a36;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(247, 201, 40, 0.28);
+}
+
+.customer-auth-btn:active {
+  transform: translateY(0);
+}
+
+.customer-auth-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .customer-auth-switch {
   text-align: center;
-  margin-top: 1.2rem;
+  margin-top: 1.4rem;
   font-size: 0.9rem;
-  color: #6b625a;
+  color: #6b7a90;
+}
+
+.customer-auth-switch a {
+  color: #0d47a1;
+  font-weight: 800;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.customer-auth-switch a:hover {
+  color: #061a36;
 }

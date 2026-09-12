@@ -13,7 +13,7 @@ import OrderForm from './pages/customer/OrderForm';
 import OrderSuccess from './pages/customer/OrderSuccess';
 import PaymentMethod from './pages/customer/PaymentMethod';
 
-
+import ScrollToTop from "./components/ScrollToTop";
 import TrackOrder from './pages/customer/TrackOrder';
 import Contact from './pages/customer/Contact';
 import CustomerLogin from './pages/customer/CustomerLogin';
@@ -30,11 +30,13 @@ import AdminDesignEdit from './pages/admin/AdminDesignEdit';
 import AdminCategories from './pages/admin/AdminCategories';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminCustomers from './pages/admin/AdminCustomers';
+import AdminAnalytics from './pages/admin/AdminAnalytics';
 
 function App() {
   return (
     <AuthProvider>
     <CustomerAuthProvider>
+      <ScrollToTop />
       <Routes>
         <Route element={<CustomerLayout />}>
           <Route path="/" element={<Home />} />
@@ -66,6 +68,7 @@ function App() {
             <Route path="/admin/categories" element={<AdminCategories />} />
             <Route path="/admin/orders" element={<AdminOrders />} />
             <Route path="/admin/customers" element={<AdminCustomers />} />
+            <Route path="/admin/analytics" element={<AdminAnalytics />} />
           </Route>
         </Route>
 

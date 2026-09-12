@@ -1,161 +1,687 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { FaArrowLeft, FaCopy, FaPhoneAlt, FaCheckCircle, FaWhatsapp } from 'react-icons/fa';
-import { api } from '../../api/client';
-import { BUSINESS, WHATSAPP_LINK, whatsappLinkWithMessage, PRINT_SPECIFICATIONS, ORDER_ASSURANCES } from '../../constants/business';
-import Loader from '../../components/Loader';
-import './DesignDetails.css';
 
-const API_ORIGIN = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api').replace('/api', '');
-const resolveImage = (src) => (src?.startsWith('http') ? src : `${API_ORIGIN}${src || ''}`);
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  FaArrowLeft,
+  FaCopy,
+  FaPhoneAlt,
+  FaCheckCircle,
+  FaWhatsapp,
+  FaShieldAlt,
+  FaRulerCombined,
+  FaTag,
+  FaPrint,
+  FaArrowRight,
+  FaTimes,
+} from "react-icons/fa";
+
+import { api } from "../../api/client";
+import {
+  BUSINESS,
+  whatsappLinkWithMessage,
+  PRINT_SPECIFICATIONS,
+  ORDER_ASSURANCES,
+} from "../../constants/business";
+
+import Loader from "../../components/Loader";
+import "./DesignDetails.css";
+
+const API_ORIGIN = (
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api"
+).replace("/api", "");
+
+const resolveImage = (src) =>
+  src?.startsWith("http") ? src : `${API_ORIGIN}${src || ""}`;
 
 const DesignDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [design, setDesign] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
+
+  // Full-screen image viewer
+  const [isImageOpen, setIsImageOpen] = useState(false);
 
   useEffect(() => {
     setLoading(true);
+    setError("");
+
     api
       .get(`/designs/${id}`)
       .then((res) => setDesign(res.data))
-      .catch(() => setError('Design not found'))
+      .catch(() => setError("Design not found"))
       .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <Loader label="Loading design..." />;
+  // Close image viewer with ESC
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setIsImageOpen(false);
+      }
+    };
+
+    if (isImageOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+
+      // Prevent background page scrolling
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [isImageOpen]);
+
+  if (loading) {
+    return <Loader label="Loading design..." />;
+  }
+
   if (error || !design) {
     return (
-      <div className="page-container empty-state">
-        {error || 'Design not found'}. <Link to="/catalogue">Back to catalogue</Link>
+      <div className="design-details-error">
+        <div className="design-error-card">
+          <FaPrint />
+
+          <h2>Design Not Found</h2>
+
+          <p>
+            {error || "The requested design could not be found."}
+          </p>
+
+          <Link to="/catalogue" className="design-error-btn">
+            <FaArrowLeft />
+            Back to Catalogue
+          </Link>
+        </div>
       </div>
     );
   }
 
   const shortId = design._id.slice(-6).toUpperCase();
 
+  const imageUrl = resolveImage(design.fullImage);
+
   const handleCopyId = () => {
     navigator.clipboard?.writeText(shortId);
     setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 1500);
+  };
+
+  const openImageViewer = () => {
+    setIsImageOpen(true);
+  };
+
+  const closeImageViewer = () => {
+    setIsImageOpen(false);
   };
 
   return (
-    <div className="page-container design-details-page">
+    <main className="design-details-page">
+
+      {/* =====================================================
+          TOP NAVIGATION
+      ===================================================== */}
+
       <div className="design-details-topbar">
         <nav className="design-details-breadcrumb">
-          <Link to="/">Home</Link> <span>/</span> <Link to="/catalogue">Designs</Link>{' '}
+          <Link to="/">Home</Link>
+
+          <span>/</span>
+
+          <Link to="/catalogue">Designs</Link>
+
           {design.category?.name && (
             <>
-              <span>/</span> <span>{design.category.name}</span>
+              <span>/</span>
+              <span>{design.category.name}</span>
             </>
           )}
-          <span>/</span> <span>{shortId} ({design.title})</span>
+
+          <span>/</span>
+
+          <strong>{shortId}</strong>
         </nav>
+
         <Link to="/catalogue" className="design-details-back">
-          <FaArrowLeft /> Back to Design Catalog
+          <FaArrowLeft />
+          Back to Design Catalog
         </Link>
       </div>
 
-      <div className="design-details">
+
+      {/* =====================================================
+          MAIN PRODUCT AREA
+      ===================================================== */}
+
+      <section className="design-details-layout">
+
+        {/* =================================================
+            LEFT SIDE
+        ================================================= */}
+
         <div className="design-details-gallery">
-          <div className="design-details-image">
-            <span className="design-details-id-badge">ID: {shortId}</span>
-            <span className="design-details-hd-badge">HD 1440 DPI Ready</span>
-            <img src={resolveImage(design.fullImage)} alt={design.title} loading="lazy" />
+
+          {/* =================================================
+              IMAGE
+          ================================================= */}
+
+          <div className="design-details-image-card">
+
+            <div className="design-details-image-header">
+              <span>
+                <FaPrint />
+                Premium Print Design
+              </span>
+
+              <span className="design-details-id-badge">
+                ID: {shortId}
+              </span>
+            </div>
+
+
+            {/* CLICKABLE IMAGE */}
+
+            <button
+              type="button"
+              className="design-details-image-click"
+              onClick={openImageViewer}
+              aria-label="View design image full screen"
+            >
+              <div className="design-details-image">
+
+                <img
+                  src={imageUrl}
+                  alt={design.title}
+                  loading="lazy"
+                />
+
+                <div className="design-details-hd-badge">
+                  HD • 1440 DPI Ready
+                </div>
+
+                {/* IMAGE VIEW HINT */}
+
+                <div className="design-image-click-hint">
+                  Click to view full screen
+                </div>
+
+              </div>
+            </button>
+
+
+            <div className="design-details-image-footer">
+              <span>
+                <FaShieldAlt />
+                High Quality Print Ready
+              </span>
+
+              <span>
+                <FaCheckCircle />
+                Production Ready
+              </span>
+            </div>
+
           </div>
+
+
+          {/* =================================================
+              STYLE TAGS
+          ================================================= */}
 
           {design.tags?.length > 0 && (
-            <div className="design-details-block">
-              <h4>Style Tags</h4>
-              <div className="design-details-tags">
-                {design.tags.map((tag) => (
-                  <span key={tag} className="tag">{tag}</span>
-                ))}
+            <div className="design-details-panel">
+
+              <div className="design-panel-heading">
+
+                <div className="design-panel-icon">
+                  <FaTag />
+                </div>
+
+                <div>
+                  <span>DESIGN CHARACTER</span>
+                  <h3>Style Tags</h3>
+                </div>
+
               </div>
+
+              <div className="design-details-tags">
+
+                {design.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="design-tag"
+                  >
+                    {tag}
+                  </span>
+                ))}
+
+              </div>
+
             </div>
           )}
 
-          <div className="design-details-specs card">
-            <h4>Print Specifications</h4>
+
+          {/* =================================================
+              PRINT SPECIFICATIONS
+          ================================================= */}
+
+          <div className="design-details-panel">
+
+            <div className="design-panel-heading">
+
+              <div className="design-panel-icon">
+                <FaRulerCombined />
+              </div>
+
+              <div>
+                <span>PRINT INFORMATION</span>
+                <h3>Print Specifications</h3>
+              </div>
+
+            </div>
+
+
             <div className="design-details-specs-grid">
+
               {PRINT_SPECIFICATIONS.map((spec) => (
-                <div key={spec.label}>
-                  <span className="design-details-specs-label">{spec.label}</span>
-                  <span className="design-details-specs-value">{spec.value}</span>
+                <div
+                  key={spec.label}
+                  className="design-spec-item"
+                >
+
+                  <span className="design-details-specs-label">
+                    {spec.label}
+                  </span>
+
+                  <strong className="design-details-specs-value">
+                    {spec.value}
+                  </strong>
+
                 </div>
               ))}
+
             </div>
+
           </div>
+
+
+          {/* =================================================
+              ASSURANCES
+          ================================================= */}
 
           <div className="design-details-assurances">
+
             {ORDER_ASSURANCES.map((item) => (
-              <span key={item} className="design-details-assurance">
-                <FaCheckCircle /> {item}
+              <span
+                key={item}
+                className="design-details-assurance"
+              >
+                <FaCheckCircle />
+                {item}
               </span>
             ))}
+
           </div>
+
         </div>
+
+
+        {/* =================================================
+            RIGHT SIDE
+        ================================================= */}
 
         <div className="design-details-info">
-          <p className="design-details-eyebrow">
-            {design.category?.name || 'Design'} Collection &middot; {BUSINESS.location} Studio
-          </p>
-          <h1 className="section-title design-details-title">
-            {design.title} <span className="design-details-title-id">({shortId})</span>
-          </h1>
-          {design.description && <p className="design-details-description">{design.description}</p>}
 
-          <button type="button" className="design-details-copy-btn" onClick={handleCopyId}>
-            <FaCopy /> {copied ? 'Copied!' : `Copy ID: ${shortId}`}
-          </button>
+          <div className="design-details-info-inner">
 
-          {design.sizeOptions?.length > 0 && (
-            <div className="design-details-block">
-              <h4>Available Sizes</h4>
-              <div className="design-details-tags">
-                {design.sizeOptions.map((size) => (
-                  <span key={size} className="tag">{size}</span>
-                ))}
-              </div>
+            <div className="design-details-eyebrow">
+              <span></span>
+
+              {design.category?.name || "Premium"} Collection
+
+              <span className="eyebrow-dot">
+                •
+              </span>
+
+              {BUSINESS.location} Studio
             </div>
-          )}
 
-          {design.price > 0 && (
-            <p className="design-details-price">
-              Starting at &#8377;{design.price}
-              {typeof design.orderCount === 'number' && design.orderCount > 0 && (
-                <span className="design-details-order-count"> &middot; {design.orderCount} orders placed</span>
-              )}
-            </p>
-          )}
 
-          <p className="design-details-dispatch">
-            <FaCheckCircle /> Printed &amp; dispatched from {BUSINESS.address}
+            <h1 className="design-details-title">
+              {design.title}
+            </h1>
+
+
+            <div className="design-details-title-meta">
+              Design ID: <strong>{shortId}</strong>
+            </div>
+
+
+            {design.description && (
+              <p className="design-details-description">
+                {design.description}
+              </p>
+            )}
+
+
+            {/* =================================================
+                COPY ID
+            ================================================= */}
+
+            <button
+              type="button"
+              className={`design-details-copy-btn ${
+                copied ? "copied" : ""
+              }`}
+              onClick={handleCopyId}
+            >
+              <FaCopy />
+
+              {copied
+                ? "Design ID Copied!"
+                : "Copy Design ID"}
+            </button>
+
+
+            {/* =================================================
+                SIZE
+            ================================================= */}
+
+            {design.sizeOptions?.length > 0 && (
+              <div className="design-details-option-section">
+
+                <div className="design-option-heading">
+
+                  <div>
+                    <span>CHOOSE YOUR SIZE</span>
+                    <h3>Available Sizes</h3>
+                  </div>
+
+                  <FaRulerCombined />
+
+                </div>
+
+
+                <div className="design-details-tags">
+
+                  {design.sizeOptions.map((size) => (
+                    <span
+                      key={size}
+                      className="design-size-tag"
+                    >
+                      {size}
+                    </span>
+                  ))}
+
+                </div>
+
+              </div>
+            )}
+
+
+            {/* =================================================
+                PRICE
+            ================================================= */}
+
+            {design.price > 0 && (
+              <div className="design-details-price-box">
+
+                <div>
+
+                  <span>STARTING PRICE</span>
+
+                  <div className="design-details-price">
+                    ₹{design.price}
+                  </div>
+
+                </div>
+
+
+                {typeof design.orderCount === "number" &&
+                  design.orderCount > 0 && (
+                    <div className="design-details-order-count">
+
+                      <strong>
+                        {design.orderCount}+
+                      </strong>
+
+                      <span>
+                        orders placed
+                      </span>
+
+                    </div>
+                  )}
+
+              </div>
+            )}
+
+
+            {/* =================================================
+                DISPATCH
+            ================================================= */}
+
+            <div className="design-details-dispatch">
+
+              <div className="dispatch-icon">
+                <FaCheckCircle />
+              </div>
+
+              <div>
+
+                <strong>
+                  Ready for Production
+                </strong>
+
+                <span>
+                  Printed &amp; dispatched from{" "}
+                  {BUSINESS.address}
+                </span>
+
+              </div>
+
+            </div>
+
+
+            {/* =================================================
+                ACTIONS
+            ================================================= */}
+
+            <div className="design-details-actions">
+
+              <button
+                type="button"
+                className="design-details-order-btn"
+                onClick={() =>
+                  navigate(`/order/${design._id}`)
+                }
+              >
+                <span>
+                  Select &amp; Order This Design
+                </span>
+
+                <FaArrowRight />
+              </button>
+
+
+              <div className="design-secondary-actions">
+
+                <a
+                  href={`tel:${BUSINESS.phone}`}
+                  className="design-call-btn"
+                >
+                  <FaPhoneAlt />
+                  Call Designer
+                </a>
+
+
+                <a
+                  href={whatsappLinkWithMessage(
+                    `Hi, I'd like to ask about design ${shortId} (${design.title}).`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="design-whatsapp-btn"
+                >
+                  <FaWhatsapp />
+                  WhatsApp Query
+                </a>
+
+              </div>
+
+            </div>
+
+
+            {/* =================================================
+                TRUST MESSAGE
+            ================================================= */}
+
+            <div className="design-trust-box">
+
+              <FaShieldAlt />
+
+              <div>
+
+                <strong>
+                  Need help choosing?
+                </strong>
+
+                <p>
+                  Our team can help you select the right
+                  size, material and printing option for
+                  your project.
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* =====================================================
+          BOTTOM CTA
+      ===================================================== */}
+
+      <section className="design-bottom-cta">
+
+        <div className="design-bottom-cta-content">
+
+          <span>READY TO CREATE?</span>
+
+          <h2>
+            Turn this design into
+            <strong> something remarkable.</strong>
+          </h2>
+
+          <p>
+            Choose your preferred size and place your order,
+            or speak with our team for a customised printing
+            requirement.
           </p>
 
-          <div className="design-details-actions">
-            <button className="btn btn-primary design-details-order-btn" onClick={() => navigate(`/order/${design._id}`)}>
-              Select &amp; Order This Design
+
+          <div className="design-bottom-actions">
+
+            <button
+              type="button"
+              onClick={() =>
+                navigate(`/order/${design._id}`)
+              }
+              className="bottom-order-btn"
+            >
+              Order This Design
+              <FaArrowRight />
             </button>
-            <a href={`tel:${BUSINESS.phone}`} className="btn btn-outline">
-              <FaPhoneAlt /> Call Designer
-            </a>
+
+
             <a
-              href={whatsappLinkWithMessage(`Hi, I'd like to ask about design ${shortId} (${design.title}).`)}
+              href={whatsappLinkWithMessage(
+                `Hi, I'd like to enquire about design ${shortId} (${design.title}).`
+              )}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-gold"
+              className="bottom-whatsapp-btn"
             >
-              <FaWhatsapp /> WhatsApp Query
+              <FaWhatsapp />
+              Talk to Us
             </a>
+
           </div>
+
         </div>
-      </div>
-    </div>
+
+
+        <div className="design-bottom-decoration">
+
+          <div className="design-decoration-circle circle-one"></div>
+
+          <div className="design-decoration-circle circle-two"></div>
+
+          <div className="design-decoration-yellow"></div>
+
+        </div>
+
+      </section>
+
+
+      {/* =====================================================
+          FULL SCREEN IMAGE VIEWER
+      ===================================================== */}
+
+      {isImageOpen && (
+        <div
+          className="design-fullscreen-viewer"
+          onClick={closeImageViewer}
+        >
+
+          {/* CLOSE / X BUTTON */}
+
+          <button
+            type="button"
+            className="design-fullscreen-close"
+            onClick={(event) => {
+              event.stopPropagation();
+              closeImageViewer();
+            }}
+            aria-label="Close image viewer"
+          >
+            <FaTimes />
+          </button>
+
+
+          {/* LARGE IMAGE */}
+
+          <div
+            className="design-fullscreen-image-wrapper"
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+
+            <img
+              src={imageUrl}
+              alt={design.title}
+              className="design-fullscreen-image"
+            />
+
+          </div>
+
+        </div>
+      )}
+
+    </main>
   );
 };
 

@@ -1,192 +1,873 @@
+/* =========================================================
+   YAMINI FLEX PRINTING
+   PREMIUM NAVBAR
+   BLUE • YELLOW • WHITE
+   ========================================================= */
+
+
+/* =========================================================
+   COLOUR SYSTEM
+   ========================================================= */
+
 .navbar {
-  background-color: var(--color-cream);
-  border-bottom: 1px solid var(--color-gold-soft);
+  --yamini-blue: #0647a6;
+  --yamini-blue-dark: #032d70;
+  --yamini-blue-deep: #021f4d;
+  --yamini-blue-light: #eaf2ff;
+
+  --yamini-yellow: #ffc400;
+  --yamini-yellow-light: #fff4c2;
+
+  --yamini-white: #ffffff;
+  --yamini-text: #172033;
+  --yamini-muted: #6b7280;
+
+  --yamini-border: #e4e9f1;
+
+  width: 100%;
+
+  background: var(--yamini-white);
+
   position: sticky;
   top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  z-index: 1000;
+
+  box-shadow:
+    0 4px 20px rgba(3, 45, 112, 0.08);
 }
 
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
 .navbar-topbar {
-  background-color: var(--color-charcoal);
-  color: #d8d1c8;
-  font-size: 0.8rem;
+  background: var(--yamini-blue-deep);
+
+  color: rgba(255, 255, 255, 0.9);
+
+  font-size: 0.76rem;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.08);
 }
 
 .navbar-topbar-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0.4rem 1.5rem;
+  width: min(1240px, calc(100% - 40px));
+
+  margin: auto;
+
+  min-height: 38px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+
+  gap: 20px;
 }
 
-.navbar-topbar-item {
+.navbar-topbar-left,
+.navbar-topbar-right {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+
+  gap: 18px;
+}
+
+.navbar-topbar-left span,
+.navbar-topbar-right a {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
   white-space: nowrap;
 }
 
-.navbar-topbar-link {
-  color: var(--color-gold-soft);
-  text-decoration: none;
+.navbar-topbar-left svg,
+.navbar-topbar-right svg {
+  color: var(--yamini-yellow);
 }
 
-.navbar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0.9rem 1.5rem;
+.navbar-topbar-right a {
+  color: #fff;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.navbar-topbar-right a:hover {
+  color: var(--yamini-yellow);
+}
+
+.navbar-topbar-divider {
+  opacity: 0.25;
+}
+
+
+/* =========================================================
+   MAIN NAVIGATION
+   ========================================================= */
+
+.navbar-main {
+  background: var(--yamini-white);
+
+  border-bottom:
+    1px solid var(--yamini-border);
+}
+
+.navbar-main-inner {
+  width: min(1240px, calc(100% - 40px));
+
+  min-height: 82px;
+
+  margin: auto;
+
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.2rem;
-  flex-wrap: wrap;
+
+  gap: 30px;
 }
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
 
 .navbar-brand {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.3rem;
-  color: var(--color-burgundy);
+
+  gap: 11px;
+
   text-decoration: none;
-  letter-spacing: 0.5px;
+
+  flex-shrink: 0;
 }
 
-.navbar-brand-icon {
-  color: var(--color-gold);
-  font-size: 1.5rem;
-}
+.navbar-brand-mark {
+  width: 45px;
+  height: 45px;
 
-.navbar-brand-sub {
-  display: block;
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: #857c72;
-  letter-spacing: 0.5px;
-}
-
-.navbar-links {
   display: flex;
-  gap: 1.8rem;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--yamini-blue);
+
+  color: var(--yamini-yellow);
+
+  border-radius: 8px;
+
+  font-size: 1.35rem;
+
+  box-shadow:
+    0 5px 14px rgba(6, 71, 166, 0.18);
+}
+
+.navbar-brand-text {
+  display: flex;
+  flex-direction: column;
+
+  line-height: 1.1;
+}
+
+.navbar-brand-text strong {
+  color: var(--yamini-blue-dark);
+
+  font-size: 1.25rem;
+
+  font-weight: 800;
+
+  letter-spacing: -0.3px;
+}
+
+.navbar-brand-text span {
+  margin-top: 5px;
+
+  color: var(--yamini-muted);
+
+  font-size: 0.68rem;
+
+  font-weight: 500;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   DESKTOP NAVIGATION
+   ========================================================= */
+
+.navbar-navigation {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
 }
 
 .navbar-link {
-  color: var(--color-charcoal);
+  position: relative;
+
+  padding: 30px 14px;
+
+  color: var(--yamini-text);
+
   text-decoration: none;
-  font-weight: 500;
-  font-size: 0.98rem;
-  padding-bottom: 4px;
-  border-bottom: 2px solid transparent;
-  transition: color 0.2s ease, border-color 0.2s ease;
+
+  font-size: 0.88rem;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.navbar-link::after {
+  content: "";
+
+  position: absolute;
+
+  left: 14px;
+  right: 14px;
+  bottom: 19px;
+
+  height: 3px;
+
+  border-radius: 3px;
+
+  background: var(--yamini-yellow);
+
+  transform: scaleX(0);
+
+  transform-origin: center;
+
+  transition: transform 0.2s ease;
 }
 
 .navbar-link:hover {
-  color: var(--color-burgundy);
+  color: var(--yamini-blue);
+}
+
+.navbar-link:hover::after,
+.navbar-link-active::after {
+  transform: scaleX(1);
 }
 
 .navbar-link-active {
-  color: var(--color-burgundy);
-  border-bottom-color: var(--color-gold);
+  color: var(--yamini-blue);
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   RIGHT SIDE ACTIONS
+   ========================================================= */
+
+.navbar-main-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  flex-shrink: 0;
+}
+
+.navbar-account {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: var(--yamini-text);
+
+  text-decoration: none;
+
+  font-size: 0.84rem;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  transition: color 0.2s ease;
+}
+
+.navbar-account svg {
+  color: var(--yamini-blue);
+
+  font-size: 1.1rem;
+}
+
+.navbar-account:hover {
+  color: var(--yamini-blue);
+}
+
+
+/* =========================================================
+   PRIMARY CTA
+   ========================================================= */
+
+.navbar-quote-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  min-height: 43px;
+
+  padding: 0 18px;
+
+  background: var(--yamini-yellow);
+
+  color: var(--yamini-blue-deep);
+
+  border-radius: 6px;
+
+  text-decoration: none;
+
+  font-size: 0.82rem;
+
+  font-weight: 800;
+
+  white-space: nowrap;
+
+  box-shadow:
+    0 5px 14px rgba(255, 196, 0, 0.2);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.navbar-quote-btn:hover {
+  background: #ffd333;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 20px rgba(255, 196, 0, 0.3);
+}
+
+.navbar-quote-btn svg {
+  font-size: 1rem;
+}
+
+
+/* =========================================================
+   SEARCH SECTION
+   ========================================================= */
+
+.navbar-search-section {
+  background: #f7f9fc;
+
+  border-bottom:
+    1px solid var(--yamini-border);
+}
+
+.navbar-search-inner {
+  width: min(1240px, calc(100% - 40px));
+
+  min-height: 58px;
+
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+}
+
+.navbar-search-label {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: var(--yamini-blue-dark);
+
+  font-size: 0.78rem;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.navbar-search-label svg {
+  color: var(--yamini-yellow);
+
+  background: var(--yamini-blue);
+
+  padding: 5px;
+
+  border-radius: 4px;
+
+  box-sizing: content-box;
 }
 
 .navbar-search {
+  flex: 1;
+
+  max-width: 650px;
+
+  height: 38px;
+
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  background-color: #fff;
-  border: 1px solid var(--color-cream-dark);
-  border-radius: 999px;
-  padding: 0.4rem 0.9rem;
-  flex: 1;
-  min-width: 180px;
-  max-width: 280px;
+
+  background: #fff;
+
+  border:
+    1px solid #dfe5ee;
+
+  border-radius: 5px;
+
+  overflow: hidden;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.navbar-search:focus-within {
+  border-color: var(--yamini-blue);
+
+  box-shadow:
+    0 0 0 3px rgba(6, 71, 166, 0.08);
 }
 
 .navbar-search-icon {
-  color: #a39a90;
-  font-size: 0.85rem;
+  margin-left: 13px;
+
+  color: #8791a1;
+
+  font-size: 0.82rem;
+
+  flex-shrink: 0;
 }
 
 .navbar-search input {
-  border: none;
-  outline: none;
-  font-size: 0.85rem;
+  flex: 1;
+
   width: 100%;
+
+  height: 100%;
+
+  padding: 0 12px;
+
+  border: none;
+
+  outline: none;
+
   background: transparent;
+
+  color: var(--yamini-text);
+
+  font-size: 0.8rem;
 }
 
-.navbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
+.navbar-search input::placeholder {
+  color: #9aa3b1;
 }
 
-.navbar-account-link {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--color-charcoal);
-  text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
+.navbar-search button {
+  height: 100%;
 
-.navbar-account-link:hover {
-  color: var(--color-burgundy);
-}
+  padding: 0 20px;
 
-.navbar-call-btn {
-  padding: 0.45rem 0.9rem;
-  font-size: 0.85rem;
-  white-space: nowrap;
-}
+  border: none;
 
-.navbar-whatsapp {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: #25d366;
+  background: var(--yamini-blue);
+
   color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 999px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  white-space: nowrap;
+
+  font-size: 0.76rem;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
 }
 
-.navbar-whatsapp:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+.navbar-search button:hover {
+  background: var(--yamini-blue-dark);
 }
 
-@media (max-width: 992px) {
-  .navbar-topbar-item:first-child {
+
+/* =========================================================
+   MOBILE BUTTON
+   ========================================================= */
+
+.navbar-menu-button {
+  display: none;
+
+  width: 43px;
+  height: 43px;
+
+  border: 1px solid var(--yamini-border);
+
+  border-radius: 6px;
+
+  background: #fff;
+
+  color: var(--yamini-blue);
+
+  font-size: 1.15rem;
+
+  cursor: pointer;
+
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.navbar-menu-button:hover {
+  background: var(--yamini-blue);
+
+  color: var(--yamini-yellow);
+}
+
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
+.navbar-mobile {
+  display: none;
+}
+
+
+/* =========================================================
+   1100px
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .navbar-main-inner {
+    gap: 18px;
+  }
+
+  .navbar-link {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .navbar-link::after {
+    left: 9px;
+    right: 9px;
+  }
+
+  .navbar-account span {
+    display: none;
+  }
+
+  .navbar-quote-btn {
+    padding: 0 14px;
+  }
+}
+
+
+/* =========================================================
+   900px — TABLET / MOBILE NAVIGATION
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .navbar-topbar-left {
+    display: none;
+  }
+
+  .navbar-topbar-inner {
+    justify-content: flex-end;
+  }
+
+  .navbar-navigation,
+  .navbar-main-actions {
+    display: none;
+  }
+
+  .navbar-menu-button {
+    display: flex;
+
+    margin-left: auto;
+  }
+
+  .navbar-main-inner {
+    min-height: 72px;
+  }
+
+  .navbar-search-section {
+    display: none;
+  }
+
+  .navbar-mobile {
+    display: block;
+
+    max-height: 0;
+
+    overflow: hidden;
+
+    background: #fff;
+
+    border-bottom: 0 solid var(--yamini-border);
+
+    opacity: 0;
+
+    transition:
+      max-height 0.35s ease,
+      opacity 0.2s ease,
+      border-width 0.2s ease;
+  }
+
+  .navbar-mobile-open {
+    max-height: 600px;
+
+    opacity: 1;
+
+    border-bottom-width: 1px;
+  }
+
+  .navbar-mobile-navigation {
+    display: flex;
+    flex-direction: column;
+
+    padding: 8px 20px;
+  }
+
+  .navbar-mobile-navigation .navbar-link {
+    padding: 15px 5px;
+
+    border-bottom:
+      1px solid var(--yamini-border);
+  }
+
+  .navbar-mobile-navigation .navbar-link::after {
+    display: none;
+  }
+
+  .navbar-mobile-divider {
+    height: 1px;
+
+    background: var(--yamini-border);
+
+    margin: 4px 20px 10px;
+  }
+
+  .navbar-mobile-account,
+  .navbar-mobile-call,
+  .navbar-mobile-quote {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 8px 20px;
+
+    padding: 13px 15px;
+
+    border-radius: 5px;
+
+    text-decoration: none;
+
+    font-size: 0.85rem;
+
+    font-weight: 700;
+  }
+
+  .navbar-mobile-account {
+    color: var(--yamini-blue);
+
+    background: var(--yamini-blue-light);
+  }
+
+  .navbar-mobile-call {
+    color: var(--yamini-blue);
+
+    border:
+      1px solid var(--yamini-border);
+  }
+
+  .navbar-mobile-quote {
+    margin-bottom: 18px;
+
+    background: var(--yamini-yellow);
+
+    color: var(--yamini-blue-deep);
+  }
+
+  .navbar-mobile-account svg,
+  .navbar-mobile-call svg,
+  .navbar-mobile-quote svg {
+    font-size: 1rem;
+  }
+}
+
+
+/* =========================================================
+   600px — MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .navbar-topbar-inner {
+    width: calc(100% - 24px);
+
+    min-height: 34px;
+  }
+
+  .navbar-topbar-right {
+    width: 100%;
+
+    justify-content: space-between;
+
+    gap: 10px;
+  }
+
+  .navbar-topbar-right a {
+    font-size: 0.68rem;
+  }
+
+  .navbar-main-inner {
+    width: calc(100% - 24px);
+
+    min-height: 68px;
+  }
+
+  .navbar-brand-mark {
+    width: 40px;
+    height: 40px;
+
+    font-size: 1.1rem;
+  }
+
+  .navbar-brand-text strong {
+    font-size: 1.05rem;
+  }
+
+  .navbar-brand-text span {
+    font-size: 0.58rem;
+  }
+
+  .navbar-menu-button {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+
+/* =========================================================
+   400px — SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .navbar-brand-mark {
+    width: 36px;
+    height: 36px;
+  }
+
+  .navbar-brand-text strong {
+    font-size: 0.95rem;
+  }
+
+  .navbar-brand-text span {
+    display: none;
+  }
+
+  .navbar-topbar-right a:first-child {
     display: none;
   }
 }
 
-@media (max-width: 720px) {
-  .navbar-container {
-    flex-wrap: wrap;
-  }
-  .navbar-links {
-    gap: 1rem;
-    order: 3;
-    width: 100%;
-    justify-content: center;
-  }
-  .navbar-search {
-    order: 2;
-    max-width: none;
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .navbar *,
+  .navbar *::before,
+  .navbar *::after {
+    transition: none !important;
   }
 }
+
+/* =========================================================
+   YAMINI FLEX PRINTING
+   PREMIUM LOGO
+   ========================================================= */
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.navbar-brand-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.navbar-brand-logo img {
+  display: block;
+  width: 190px;
+  height: 62px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+  .navbar-brand-logo img {
+    width: 175px;
+    height: 58px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .navbar-brand-logo img {
+    width: 165px;
+    height: 54px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .navbar-brand-logo img {
+    width: 145px;
+    height: 48px;
+  }
+}
+
