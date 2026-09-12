@@ -1,14 +1,17 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import {
   FaTachometerAlt,
+  FaChartLine,
   FaImages,
   FaThLarge,
   FaClipboardList,
   FaUsers,
   FaSignOutAlt,
+  FaChevronRight,
 } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 import './AdminLayout.css';
+import yaminiLogo from '../assets/yamini-flex-logo.webp';
 
 const AdminLayout = () => {
   const { admin, logout } = useAuth();
@@ -16,40 +19,194 @@ const AdminLayout = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/admin/login');
+    navigate('/');
   };
 
-  const linkClass = ({ isActive }) => `admin-nav-link${isActive ? ' admin-nav-link-active' : ''}`;
+  const linkClass = ({ isActive }) =>
+    `admin-nav-link${isActive ? ' admin-nav-link-active' : ''}`;
 
   return (
     <div className="admin-layout">
+      {/* Sidebar */}
       <aside className="admin-sidebar">
-        <div className="admin-sidebar-title">YAMINI ADMIN</div>
+        <div className="admin-sidebar-top">
+          <div className="admin-brand">
+            <div className="admin-brand-logo">
+              <img
+                src={yaminiLogo}
+                alt="Yamini Flex Printing"
+              />
+            </div>
+          </div>
+
+          <div className="admin-panel-badge">
+            <span className="admin-panel-dot"></span>
+            ADMIN PANEL
+          </div>
+        </div>
+
+        <div className="admin-navigation-label">
+          MAIN MENU
+        </div>
+
         <nav className="admin-nav">
-          <NavLink to="/admin/dashboard" className={linkClass}>
-            <FaTachometerAlt /> Dashboard
+
+          {/* Dashboard */}
+          <NavLink
+            to="/admin/dashboard"
+            className={linkClass}
+          >
+            <span className="admin-nav-icon">
+              <FaTachometerAlt />
+            </span>
+
+            <span className="admin-nav-text">
+              Dashboard
+            </span>
+
+            <FaChevronRight className="admin-nav-arrow" />
           </NavLink>
-          <NavLink to="/admin/designs" className={linkClass}>
-            <FaImages /> Designs
+
+          {/* Analytics */}
+          <NavLink
+            to="/admin/analytics"
+            className={linkClass}
+          >
+            <span className="admin-nav-icon">
+              <FaChartLine />
+            </span>
+
+            <span className="admin-nav-text">
+              Analytics
+            </span>
+
+            <FaChevronRight className="admin-nav-arrow" />
           </NavLink>
-          <NavLink to="/admin/categories" className={linkClass}>
-            <FaThLarge /> Categories
+
+          {/* Designs */}
+          <NavLink
+            to="/admin/designs"
+            className={linkClass}
+          >
+            <span className="admin-nav-icon">
+              <FaImages />
+            </span>
+
+            <span className="admin-nav-text">
+              Designs
+            </span>
+
+            <FaChevronRight className="admin-nav-arrow" />
           </NavLink>
-          <NavLink to="/admin/orders" className={linkClass}>
-            <FaClipboardList /> Orders
+
+          {/* Categories */}
+          <NavLink
+            to="/admin/categories"
+            className={linkClass}
+          >
+            <span className="admin-nav-icon">
+              <FaThLarge />
+            </span>
+
+            <span className="admin-nav-text">
+              Categories
+            </span>
+
+            <FaChevronRight className="admin-nav-arrow" />
           </NavLink>
-          <NavLink to="/admin/customers" className={linkClass}>
-            <FaUsers /> Customers
+
+          {/* Orders */}
+          <NavLink
+            to="/admin/orders"
+            className={linkClass}
+          >
+            <span className="admin-nav-icon">
+              <FaClipboardList />
+            </span>
+
+            <span className="admin-nav-text">
+              Orders
+            </span>
+
+            <FaChevronRight className="admin-nav-arrow" />
           </NavLink>
+
+          {/* Customers */}
+          <NavLink
+            to="/admin/customers"
+            className={linkClass}
+          >
+            <span className="admin-nav-icon">
+              <FaUsers />
+            </span>
+
+            <span className="admin-nav-text">
+              Customers
+            </span>
+
+            <FaChevronRight className="admin-nav-arrow" />
+          </NavLink>
+
         </nav>
-        <button className="admin-logout-btn" onClick={handleLogout}>
-          <FaSignOutAlt /> Logout
-        </button>
+
+        <div className="admin-sidebar-bottom">
+          <div className="admin-user-card">
+            <div className="admin-user-avatar">
+              {(admin?.name || 'A')
+                .charAt(0)
+                .toUpperCase()}
+            </div>
+
+            <div className="admin-user-info">
+              <span className="admin-user-label">
+                SIGNED IN AS
+              </span>
+
+              <strong>
+                {admin?.name || 'Admin'}
+              </strong>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className="admin-logout-btn"
+            onClick={handleLogout}
+          >
+            <span className="admin-logout-icon">
+              <FaSignOutAlt />
+            </span>
+
+            <span>Logout</span>
+          </button>
+        </div>
       </aside>
+
+      {/* Main Content */}
       <div className="admin-content">
         <header className="admin-topbar">
-          <span>Welcome, {admin?.name || 'Admin'}</span>
+          <div className="admin-topbar-left">
+            <div className="admin-topbar-title">
+              <span className="admin-topbar-indicator"></span>
+              Admin Dashboard
+            </div>
+
+            <span className="admin-topbar-divider"></span>
+
+            <span className="admin-topbar-welcome">
+              Welcome back,{' '}
+              <strong>
+                {admin?.name || 'Admin'}
+              </strong>
+            </span>
+          </div>
+
+          <div className="admin-topbar-status">
+            <span className="admin-status-dot"></span>
+            System Online
+          </div>
         </header>
+
         <main className="admin-main">
           <Outlet />
         </main>
