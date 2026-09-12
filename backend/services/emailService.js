@@ -1,6 +1,9 @@
 const nodemailer = require('nodemailer');
  
-// Check whether environment variables are available
+// ==================================================
+// CHECK ENVIRONMENT VARIABLES
+// ==================================================
+ 
 console.log(
   'EMAIL_USER exists:',
   !!process.env.EMAIL_USER
@@ -11,122 +14,223 @@ console.log(
   !!process.env.EMAIL_APP_PASSWORD
 );
  
-// Create Gmail transporter
+// ==================================================
+// CREATE GMAIL TRANSPORTER
+// ==================================================
+ 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
+ 
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_APP_PASSWORD,
   },
 });
  
-// Verify Gmail connection when server starts
-transporter.verify((error, success) => {
-  if (error) {
+// ==================================================
+// VERIFY EMAIL CONNECTION
+// ==================================================
+ 
+transporter
+  .verify()
+  .then(() => {
+    console.log(
+      '======================================'
+    );
+ 
+    console.log(
+      'EMAIL SERVER CONNECTED SUCCESSFULLY'
+    );
+ 
+    console.log(
+      '======================================'
+    );
+  })
+  .catch((error) => {
     console.error(
-      'Email service configuration error:',
+      '======================================'
+    );
+ 
+    console.error(
+      'EMAIL SERVER CONNECTION FAILED'
+    );
+ 
+    console.error(
       error.message
     );
-  } else {
-    console.log(
-      'Email server is ready and connected to Gmail'
+ 
+    console.error(
+      '======================================'
     );
-  }
-});
+  });
  
-// --------------------------------------------------
+// ==================================================
 // ORDER CONFIRMATION EMAIL
-// --------------------------------------------------
+// ==================================================
  
-const sendOrderConfirmationEmail = async (order) => {
+const sendOrderConfirmationEmail = async (
+  order
+) => {
   try {
     if (!order?.email) {
       console.log(
         'Order confirmation email skipped: customer email missing'
       );
+ 
       return;
     }
  
     const mailOptions = {
-      from: `"YAMINI FLEX PRINTING" <${process.env.EMAIL_USER}>`,
+      from:
+        `"YAMINI FLEX PRINTING" <${process.env.EMAIL_USER}>`,
+ 
       to: order.email,
  
-      subject: `Order Confirmation - ${order.orderId}`,
+      subject:
+        `Order Confirmation - ${order.orderId}`,
  
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto;">
+        <!DOCTYPE html>
  
-          <h2 style="text-align:center;">
-            YAMINI FLEX PRINTING
-          </h2>
+        <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>Order Confirmation</title>
+        </head>
  
-          <p>Dear ${order.name || 'Customer'},</p>
+        <body
+          style="
+            margin:0;
+            padding:20px;
+            background:#f5f5f5;
+            font-family:Arial,sans-serif;
+          "
+        >
  
-          <p>
-            Thank you for placing your order with
-            <strong>YAMINI FLEX PRINTING</strong>.
-          </p>
+          <div
+            style="
+              max-width:600px;
+              margin:auto;
+              background:white;
+              padding:30px;
+              border-radius:10px;
+            "
+          >
  
-          <p>
-            Your order has been successfully received.
-          </p>
+            <h2
+              style="
+                text-align:center;
+                margin-bottom:25px;
+              "
+            >
+              YAMINI FLEX PRINTING
+            </h2>
  
-          <hr />
+            <h3>
+              Order Confirmed
+            </h3>
  
-          <h3>Order Details</h3>
+            <p>
+              Dear
+              <strong>
+                ${order.name || 'Customer'}
+              </strong>,
+            </p>
  
-          <p>
-            <strong>Order ID:</strong>
-            ${order.orderId}
-          </p>
+            <p>
+              Thank you for placing your order
+              with YAMINI FLEX PRINTING.
+            </p>
  
-          <p>
-            <strong>Quantity:</strong>
-            ${order.quantity || 1}
-          </p>
+            <p>
+              Your order has been successfully
+              received.
+            </p>
  
-          <p>
-            <strong>Material:</strong>
-            ${order.material || 'N/A'}
-          </p>
+            <hr>
  
-          <p>
-            <strong>Total Amount:</strong>
-            ₹${order.grandTotal || order.totalAmount || 0}
-          </p>
+            <h3>
+              Order Details
+            </h3>
  
-          <p>
-            <strong>Payment Method:</strong>
-            ${order.paymentMethod || 'COD'}
-          </p>
+            <p>
+              <strong>Order ID:</strong>
+              ${order.orderId || 'N/A'}
+            </p>
  
-          <p>
-            <strong>Order Status:</strong>
-            ${order.status || 'pending'}
-          </p>
+            <p>
+              <strong>Quantity:</strong>
+              ${order.quantity || 1}
+            </p>
  
-          <hr />
+            <p>
+              <strong>Material:</strong>
+              ${order.material || 'N/A'}
+            </p>
  
-          <p>
-            We will keep you updated about your order.
-          </p>
+            <p>
+              <strong>Payment Method:</strong>
+              ${order.paymentMethod || 'COD'}
+            </p>
  
-          <p>
-            Thank you for choosing
-            <strong>YAMINI FLEX PRINTING</strong>.
-          </p>
+            <p>
+              <strong>Order Status:</strong>
+              ${order.status || 'pending'}
+            </p>
  
-        </div>
+            <p>
+              <strong>Total Amount:</strong>
+              ₹${order.grandTotal || order.totalAmount || 0}
+            </p>
+ 
+            <hr>
+ 
+            <p>
+              We will keep you updated about
+              your order.
+            </p>
+ 
+            <p>
+              Thank you for choosing
+              <strong>
+                YAMINI FLEX PRINTING
+              </strong>.
+            </p>
+ 
+          </div>
+ 
+        </body>
+        </html>
       `,
     };
  
     const info =
-      await transporter.sendMail(mailOptions);
+      await transporter.sendMail(
+        mailOptions
+      );
  
     console.log(
-      'Order confirmation email sent:',
+      '======================================'
+    );
+ 
+    console.log(
+      'ORDER CONFIRMATION EMAIL SENT'
+    );
+ 
+    console.log(
+      'Message ID:',
       info.messageId
     );
+ 
+    console.log(
+      'To:',
+      order.email
+    );
+ 
+    console.log(
+      '======================================'
+    );
+ 
   } catch (error) {
     console.error(
       'Order confirmation email error:',
@@ -135,104 +239,172 @@ const sendOrderConfirmationEmail = async (order) => {
   }
 };
  
-// --------------------------------------------------
+// ==================================================
 // PAYMENT SUCCESS EMAIL
-// --------------------------------------------------
+// ==================================================
  
-const sendPaymentSuccessEmail = async (order) => {
+const sendPaymentSuccessEmail = async (
+  order
+) => {
   try {
     if (!order?.email) {
       console.log(
         'Payment email skipped: customer email missing'
       );
+ 
       return;
     }
  
     const mailOptions = {
-      from: `"YAMINI FLEX PRINTING" <${process.env.EMAIL_USER}>`,
+      from:
+        `"YAMINI FLEX PRINTING" <${process.env.EMAIL_USER}>`,
+ 
       to: order.email,
  
-      subject: `Payment Successful - ${order.orderId}`,
+      subject:
+        `Payment Successful - ${order.orderId}`,
  
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto;">
+        <!DOCTYPE html>
  
-          <h2 style="text-align:center;">
-            Payment Successful
-          </h2>
+        <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>Payment Successful</title>
+        </head>
  
-          <p>
-            Dear ${order.name || 'Customer'},
-          </p>
+        <body
+          style="
+            margin:0;
+            padding:20px;
+            background:#f5f5f5;
+            font-family:Arial,sans-serif;
+          "
+        >
  
-          <p>
-            Your payment for your
-            <strong>YAMINI FLEX PRINTING</strong>
-            order was successful.
-          </p>
+          <div
+            style="
+              max-width:600px;
+              margin:auto;
+              background:white;
+              padding:30px;
+              border-radius:10px;
+            "
+          >
  
-          <hr />
+            <h2
+              style="
+                text-align:center;
+              "
+            >
+              YAMINI FLEX PRINTING
+            </h2>
  
-          <h3>Payment Details</h3>
+            <h3>
+              Payment Successful
+            </h3>
  
-          <p>
-            <strong>Order ID:</strong>
-            ${order.orderId}
-          </p>
+            <p>
+              Dear
+              <strong>
+                ${order.name || 'Customer'}
+              </strong>,
+            </p>
  
-          <p>
-            <strong>Payment Method:</strong>
-            ${order.paymentMethod || 'PhonePe'}
-          </p>
+            <p>
+              Your payment has been successfully
+              received.
+            </p>
  
-          <p>
-            <strong>Payment Status:</strong>
-            ${order.paymentStatus || 'Paid'}
-          </p>
+            <hr>
  
-          <p>
-            <strong>Amount Paid:</strong>
-            ₹${order.amountPaid || 0}
-          </p>
+            <h3>
+              Payment Details
+            </h3>
  
-          <p>
-            <strong>Transaction ID:</strong>
-            ${order.transactionId || 'N/A'}
-          </p>
+            <p>
+              <strong>Order ID:</strong>
+              ${order.orderId || 'N/A'}
+            </p>
  
-          <p>
-            <strong>Payment Date:</strong>
-            ${order.paymentDate || 'N/A'}
-          </p>
+            <p>
+              <strong>Payment Method:</strong>
+              ${order.paymentMethod || 'PhonePe'}
+            </p>
  
-          <p>
-            <strong>Payment Time:</strong>
-            ${order.paymentTime || 'N/A'}
-          </p>
+            <p>
+              <strong>Payment Status:</strong>
+              ${order.paymentStatus || 'Paid'}
+            </p>
  
-          <hr />
+            <p>
+              <strong>Amount Paid:</strong>
+              ₹${order.amountPaid || 0}
+            </p>
  
-          <p>
-            Your order has been confirmed and will now
-            proceed for processing.
-          </p>
+            <p>
+              <strong>Transaction ID:</strong>
+              ${order.transactionId || 'N/A'}
+            </p>
  
-          <p>
-            Thank you for choosing
-            <strong>YAMINI FLEX PRINTING</strong>.
-          </p>
+            <p>
+              <strong>Payment Date:</strong>
+              ${order.paymentDate || 'N/A'}
+            </p>
  
-        </div>
+            <p>
+              <strong>Payment Time:</strong>
+              ${order.paymentTime || 'N/A'}
+            </p>
+ 
+            <hr>
+ 
+            <p>
+              Your order has been confirmed
+              and will proceed for processing.
+            </p>
+ 
+            <p>
+              Thank you for choosing
+              <strong>
+                YAMINI FLEX PRINTING
+              </strong>.
+            </p>
+ 
+          </div>
+ 
+        </body>
+        </html>
       `,
     };
  
     const info =
-      await transporter.sendMail(mailOptions);
+      await transporter.sendMail(
+        mailOptions
+      );
  
     console.log(
-      'Payment success email sent:',
+      '======================================'
+    );
+ 
+    console.log(
+      'PAYMENT SUCCESS EMAIL SENT'
+    );
+ 
+    console.log(
+      'Message ID:',
       info.messageId
     );
+ 
+    console.log(
+      'To:',
+      order.email
+    );
+ 
+    console.log(
+      '======================================'
+    );
+ 
   } catch (error) {
     console.error(
       'Payment success email error:',
@@ -241,9 +413,9 @@ const sendPaymentSuccessEmail = async (order) => {
   }
 };
  
-// --------------------------------------------------
+// ==================================================
 // ORDER STATUS UPDATE EMAIL
-// --------------------------------------------------
+// ==================================================
  
 const sendOrderStatusUpdateEmail = async (
   order,
@@ -254,65 +426,130 @@ const sendOrderStatusUpdateEmail = async (
       console.log(
         'Status email skipped: customer email missing'
       );
+ 
       return;
     }
  
     const mailOptions = {
-      from: `"YAMINI FLEX PRINTING" <${process.env.EMAIL_USER}>`,
+      from:
+        `"YAMINI FLEX PRINTING" <${process.env.EMAIL_USER}>`,
+ 
       to: order.email,
  
-      subject: `Order Update - ${order.orderId}`,
+      subject:
+        `Order Update - ${order.orderId}`,
  
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto;">
+        <!DOCTYPE html>
  
-          <h2 style="text-align:center;">
-            Order Status Updated
-          </h2>
+        <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>Order Status Update</title>
+        </head>
  
-          <p>
-            Dear ${order.name || 'Customer'},
-          </p>
+        <body
+          style="
+            margin:0;
+            padding:20px;
+            background:#f5f5f5;
+            font-family:Arial,sans-serif;
+          "
+        >
  
-          <p>
-            Your order status has been updated.
-          </p>
+          <div
+            style="
+              max-width:600px;
+              margin:auto;
+              background:white;
+              padding:30px;
+              border-radius:10px;
+            "
+          >
  
-          <hr />
+            <h2
+              style="
+                text-align:center;
+              "
+            >
+              YAMINI FLEX PRINTING
+            </h2>
  
-          <p>
-            <strong>Order ID:</strong>
-            ${order.orderId}
-          </p>
+            <h3>
+              Order Status Updated
+            </h3>
  
-          <p>
-            <strong>Previous Status:</strong>
-            ${oldStatus || 'N/A'}
-          </p>
+            <p>
+              Dear
+              <strong>
+                ${order.name || 'Customer'}
+              </strong>,
+            </p>
  
-          <p>
-            <strong>Current Status:</strong>
-            ${order.status || 'N/A'}
-          </p>
+            <p>
+              Your order status has been updated.
+            </p>
  
-          <hr />
+            <hr>
  
-          <p>
-            Thank you for choosing
-            <strong>YAMINI FLEX PRINTING</strong>.
-          </p>
+            <p>
+              <strong>Order ID:</strong>
+              ${order.orderId || 'N/A'}
+            </p>
  
-        </div>
+            <p>
+              <strong>Previous Status:</strong>
+              ${oldStatus || 'N/A'}
+            </p>
+ 
+            <p>
+              <strong>Current Status:</strong>
+              ${order.status || 'N/A'}
+            </p>
+ 
+            <hr>
+ 
+            <p>
+              Thank you for choosing
+              <strong>
+                YAMINI FLEX PRINTING
+              </strong>.
+            </p>
+ 
+          </div>
+ 
+        </body>
+        </html>
       `,
     };
  
     const info =
-      await transporter.sendMail(mailOptions);
+      await transporter.sendMail(
+        mailOptions
+      );
  
     console.log(
-      'Order status email sent:',
+      '======================================'
+    );
+ 
+    console.log(
+      'ORDER STATUS EMAIL SENT'
+    );
+ 
+    console.log(
+      'Message ID:',
       info.messageId
     );
+ 
+    console.log(
+      'To:',
+      order.email
+    );
+ 
+    console.log(
+      '======================================'
+    );
+ 
   } catch (error) {
     console.error(
       'Order status email error:',
@@ -320,6 +557,10 @@ const sendOrderStatusUpdateEmail = async (
     );
   }
 };
+ 
+// ==================================================
+// EXPORT
+// ==================================================
  
 module.exports = {
   sendOrderConfirmationEmail,
