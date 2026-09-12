@@ -4,6 +4,11 @@ const Design = require('../models/Design');
 const jwt = require('jsonwebtoken');
 const { saveUpload, saveUploads } = require('../services/fileStorage');
 
+const {
+  sendOrderConfirmationEmail,
+  sendOrderStatusUpdateEmail,
+} = require('../services/emailService');
+
 const toFiniteNumber = (value, fallback = 0) => {
   const n = Number(value);
   return Number.isFinite(n) ? n : fallback;
@@ -327,9 +332,7 @@ const createOrder = async (req, res) => {
       functionHallAddress:
         body.functionHallAddress || '',
 
-      // IMPORTANT:
-      // Use the new Order.js enum value.
-      // Do NOT use "Order Placed".
+      // Must match Order.js enum
       status: 'pending',
 
       finalDesignFile: '',
@@ -340,6 +343,13 @@ const createOrder = async (req, res) => {
 
       customerFeedback: '',
     });
+
+    // --------------------------------------------------
+    // Send Order Confirmation Email
+    // --------------------------------------------------
+
+    // Email failure will NOT fail the order.
+    await sendOrderConfirmationEmail(order);
 
     return res.status(201).json({
       success: true,
@@ -464,6 +474,22 @@ const updateOrder = async (req, res) => {
     };
 
     // --------------------------------------------------
+    // Get existing order first
+    // --------------------------------------------------
+
+    const existingOrder =
+      await Order.findById(req.params.id);
+
+    if (!existingOrder) {
+      return res.status(404).json({
+        success: false,
+        message: 'Order not found',
+      });
+    }
+
+    const oldStatus = existingOrder.status;
+
+    // --------------------------------------------------
     // Allowed order statuses
     // --------------------------------------------------
 
@@ -478,7 +504,10 @@ const updateOrder = async (req, res) => {
       'cancelled',
     ];
 
-    // If status is supplied, make sure it is valid.
+    // --------------------------------------------------
+    // Validate status
+    // --------------------------------------------------
+
     if (updates.status) {
       if (!allowedStatuses.includes(updates.status)) {
         return res.status(400).json({
@@ -510,6 +539,10 @@ const updateOrder = async (req, res) => {
       updates.customerFeedback = '';
     }
 
+    // --------------------------------------------------
+    // Update order
+    // --------------------------------------------------
+
     const order =
       await Order.findByIdAndUpdate(
         req.params.id,
@@ -525,6 +558,17 @@ const updateOrder = async (req, res) => {
         success: false,
         message: 'Order not found',
       });
+    }
+
+    // --------------------------------------------------
+    // Send Order Status Update Email
+    // --------------------------------------------------
+
+    if (oldStatus !== order.status) {
+      await sendOrderStatusUpdateEmail(
+        order,
+        oldStatus
+      );
     }
 
     return res.json({
