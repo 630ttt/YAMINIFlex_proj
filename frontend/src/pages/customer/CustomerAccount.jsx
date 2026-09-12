@@ -7,7 +7,7 @@ import Pagination from '../../components/Pagination';
 import Loader from '../../components/Loader';
 import './CustomerAccount.css';
 
-const API_ORIGIN = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api').replace('/api', '');
+const API_ORIGIN = (import.meta.env.VITE_API_BASE_URL || 'https://yamini-flex-proj-lu87.vercel.app/').replace('/api', '');
 const resolveFile = (src) => (src?.startsWith('http') ? src : `${API_ORIGIN}${src || ''}`);
 
 const CustomerAccount = () => {
