@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://yamini-flex-proj-lu87.vercel.app/';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://yaminiflex-proj.onrender.com';
 
 const buildQuery = (params = {}) => {
   const query = new URLSearchParams();
