@@ -50,21 +50,36 @@ if (!process.env.EMAIL_APP_PASSWORD) {
 
 
 // ==================================================
-// CREATE GMAIL TRANSPORTER
+// CREATE GMAIL SMTP TRANSPORTER
 // ==================================================
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+
+  // Gmail SMTP submission port
+  port: 587,
+
+  // Port 587 uses STARTTLS
+  secure: false,
 
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_APP_PASSWORD,
   },
 
-  // Prevent SMTP connection from hanging for a long time
+  // Force IPv4.
+  // Render was trying to connect to Gmail through IPv6
+  // and returning ENETUNREACH.
+  family: 4,
+
+  // Prevent SMTP from hanging for a long time
   connectionTimeout: 10000,
   greetingTimeout: 10000,
   socketTimeout: 15000,
+
+  tls: {
+    rejectUnauthorized: true,
+  },
 });
 
 
