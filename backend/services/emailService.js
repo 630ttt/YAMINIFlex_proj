@@ -1,4 +1,16 @@
+console.log("========== EMAIL DEBUG ==========");
+console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("EMAIL_USER:", process.env.EMAIL_USER);
+console.log(
+  "EMAIL_APP_PASSWORD length:",
+  process.env.EMAIL_APP_PASSWORD
+    ? process.env.EMAIL_APP_PASSWORD.length
+    : 0
+);
+console.log("=================================");
+
 const nodemailer = require('nodemailer');
+
  
 // ==================================================
 // CHECK ENVIRONMENT VARIABLES
